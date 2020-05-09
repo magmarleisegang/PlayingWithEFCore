@@ -3,6 +3,7 @@ using PlayingWithEFCore.PawtionData;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace PlayingWithEFCore
 {
@@ -37,9 +38,7 @@ namespace PlayingWithEFCore
             modelBuilder.Entity<Pawtion>()
                 .Property<DateTime>("_addedDate")
                 .HasColumnName("AddedDate")
-                .HasConversion(
-                 toDb => toDb.Ticks,
-                 fromDb => new DateTime(fromDb));
+                .HasConversion(new DateTimeToTicksConverter());
 
             base.OnModelCreating(modelBuilder);
         }
