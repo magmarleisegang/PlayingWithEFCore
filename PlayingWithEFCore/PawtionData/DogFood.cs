@@ -2,5 +2,6 @@
 {
     public class DogFood
     {
+        public int Id { get; set; }
     }
 }

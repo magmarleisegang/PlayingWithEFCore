@@ -3,5 +3,6 @@
 {
     public class Pawtion
     {
+        public int Id { get; set; }
     }
 }
