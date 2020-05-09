@@ -72,6 +72,7 @@ namespace PlayingWithEFCore
                 dbc.Pawtions.Add(pawtion);
                 dbc.SaveChanges();
                 Assert.NotEqual(0, pawtion.Id);
+                Assert.Equal(DateTime.Today, pawtion.AddedDate().Date);
             }
         }
     }

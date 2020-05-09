@@ -19,7 +19,7 @@ namespace PlayingWithEFCore
             optionsBuilder.UseLoggerFactory(LoggerFactoryHelper.MyLoggerFactory);
 
             base.OnConfiguring(optionsBuilder);
-           
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace PlayingWithEFCore
             modelBuilder.Entity<DogFood>().ToTable("DogFoods");
             modelBuilder.Entity<DogFood>()
                 .HasAlternateKey(x => new { x.Name, x.BagSize });
-      
+
 
             modelBuilder.Entity<Pawtion>()
                 .HasOne(p => p.Food)
@@ -35,8 +35,8 @@ namespace PlayingWithEFCore
                 .HasForeignKey("DogFoodId");
 
             modelBuilder.Entity<Pawtion>()
-                .Property(p => p.AddedDate)
-                .HasField("_addedDate");
+                .Property("_addedDate")
+                .HasColumnName("AddedDate");
 
             base.OnModelCreating(modelBuilder);
         }
