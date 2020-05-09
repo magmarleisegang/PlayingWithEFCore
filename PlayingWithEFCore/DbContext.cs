@@ -16,6 +16,8 @@ namespace PlayingWithEFCore
             if (sqliteOptions != null)
                 optionsBuilder.UseSqlite(sqliteOptions.connectionString);
 
+            optionsBuilder.UseLoggerFactory(LoggerFactoryHelper.MyLoggerFactory);
+
             base.OnConfiguring(optionsBuilder);
            
         }
@@ -23,6 +25,12 @@ namespace PlayingWithEFCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DogFood>().ToTable("DogFoods");
+
+            modelBuilder.Entity<Pawtion>()
+                .HasOne(p => p.Food)
+                .WithMany()
+                .HasForeignKey("DogFoodId");
+
             base.OnModelCreating(modelBuilder);
         }
 
