@@ -38,7 +38,7 @@ namespace PlayingWithEFCore
             modelBuilder.Entity<Pawtion>()
                 .Property<DateTime>("_addedDate")
                 .HasColumnName("AddedDate")
-                .HasConversion(new DateTimeToTicksConverter());
+                .HasConversion<long>();
 
             base.OnModelCreating(modelBuilder);
         }
