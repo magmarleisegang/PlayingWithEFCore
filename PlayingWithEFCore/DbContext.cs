@@ -35,8 +35,11 @@ namespace PlayingWithEFCore
                 .HasForeignKey("DogFoodId");
 
             modelBuilder.Entity<Pawtion>()
-                .Property("_addedDate")
-                .HasColumnName("AddedDate");
+                .Property<DateTime>("_addedDate")
+                .HasColumnName("AddedDate")
+                .HasConversion(
+                 toDb => toDb.Ticks,
+                 fromDb => new DateTime(fromDb));
 
             base.OnModelCreating(modelBuilder);
         }

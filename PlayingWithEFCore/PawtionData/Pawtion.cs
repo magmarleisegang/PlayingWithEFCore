@@ -12,7 +12,7 @@ namespace PlayingWithEFCore.PawtionData
             Food = food;
             Price = price;
             PPP = ppp;
-            _addedDate = System.DateTime.Now.Ticks;
+            _addedDate = System.DateTime.Now;
         }
 
         public int Id { get; set; }
@@ -21,9 +21,9 @@ namespace PlayingWithEFCore.PawtionData
         public decimal Price { get; set; }
         public decimal PPP { get; set; }
 
-        private long _addedDate;
+        private DateTime _addedDate;
 
-        public DateTime AddedDate() { return new DateTime(_addedDate); }
+        public DateTime AddedDate() { return _addedDate; }
     }
 
 }
