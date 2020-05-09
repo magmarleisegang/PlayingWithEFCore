@@ -20,6 +20,12 @@ namespace PlayingWithEFCore
            
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DogFood>().ToTable("DogFoods");
+            base.OnModelCreating(modelBuilder);
+        }
+
         public static PawtionContext GetSQLiteContext(string filename)
         {
             PawtionContext pc = new PawtionContext(new SqliteOptions(filename));
