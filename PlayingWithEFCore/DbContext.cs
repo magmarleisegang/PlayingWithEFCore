@@ -25,11 +25,18 @@ namespace PlayingWithEFCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DogFood>().ToTable("DogFoods");
+            modelBuilder.Entity<DogFood>()
+                .HasAlternateKey(x => new { x.Name, x.BagSize });
+      
 
             modelBuilder.Entity<Pawtion>()
                 .HasOne(p => p.Food)
                 .WithMany()
                 .HasForeignKey("DogFoodId");
+
+            //modelBuilder.Entity<Pawtion>()
+            //    .Property<long>("AddedDate")
+            //    .HasDefaultValue(DateTime.UtcNow.Ticks);
 
             base.OnModelCreating(modelBuilder);
         }
