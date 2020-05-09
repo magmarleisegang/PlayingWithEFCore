@@ -14,7 +14,16 @@ namespace PlayingWithEFCore
             {
                 Console.Write(dbc.ContextId);
             }
+        }
 
+        [Fact]
+        public void CanReadOutADogFoodEntity()
+        {
+            using (var dbc = PawtionContext.GetSQLiteContext(sqlFilename))
+            {
+                var dogfood = dbc.Foods.Find(1);
+                Assert.NotNull(dogfood);
+            }
         }
     }
 }
