@@ -1,0 +1,5 @@
+﻿1. What are keyless entities?
+
+Message: System.InvalidOperationException : The entity type 'DogFood' requires a primary key to be defined. 
+If you intended to use a keyless entity type call 'HasNoKey()'.
+
