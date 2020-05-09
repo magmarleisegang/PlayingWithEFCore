@@ -67,7 +67,7 @@ namespace PlayingWithEFCore
         {
             using (var dbc = PawtionContext.GetSQLiteContext(sqlFilename))
             {
-                var food = new DogFood();
+                var food = new DogFood() { BagSize = 12, Name = "Hills Healthy Adult" };
                 var pawtion = new Pawtion(food, 765, 32);
                 dbc.Pawtions.Add(pawtion);
                 dbc.SaveChanges();

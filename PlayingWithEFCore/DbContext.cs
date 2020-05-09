@@ -34,9 +34,9 @@ namespace PlayingWithEFCore
                 .WithMany()
                 .HasForeignKey("DogFoodId");
 
-            //modelBuilder.Entity<Pawtion>()
-            //    .Property<long>("AddedDate")
-            //    .HasDefaultValue(DateTime.UtcNow.Ticks);
+            modelBuilder.Entity<Pawtion>()
+                .Property(p => p.AddedDate)
+                .HasField("_addedDate");
 
             base.OnModelCreating(modelBuilder);
         }

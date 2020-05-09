@@ -10,6 +10,7 @@
             Food = food;
             Price = price;
             PPP = ppp;
+            _addedDate = System.DateTime.Now.Ticks;
         }
 
         public int Id { get; set; }
@@ -17,5 +18,10 @@
         public DogFood Food { get; set; }
         public decimal Price { get; set; }
         public decimal PPP { get;  set; }
+
+        private long _addedDate;
+
+        public long AddedDate { get { return _addedDate; } }
     }
+    
 }
