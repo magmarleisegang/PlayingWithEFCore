@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq;
 
 namespace PlayingWithEFCore
 {
@@ -41,11 +43,19 @@ namespace PlayingWithEFCore
                 .HasColumnName("AddedDate")
                 .HasConversion<long>();
 
+            var stringLIstValueComparer = new ValueComparer<List<string>>(
+                (c1, c2) => c1.SequenceEqual(c2),
+                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                c => c.ToList());
+
+
             modelBuilder.Entity<DogFood>()
                 .Property(x => x.Ingredients)
                 .HasConversion(
                     listToDb => JsonSerializer.Serialize(listToDb, null),
-                    jsonFromDb => JsonSerializer.Deserialize<List<string>>(jsonFromDb, null));
+                    jsonFromDb => JsonSerializer.Deserialize<List<string>>(jsonFromDb, null))
+                .Metadata
+                .SetValueComparer(stringLIstValueComparer);
 
             base.OnModelCreating(modelBuilder);
         }
