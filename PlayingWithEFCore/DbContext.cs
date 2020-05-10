@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Text.Json;
 
 namespace PlayingWithEFCore
 {
@@ -39,6 +40,12 @@ namespace PlayingWithEFCore
                 .Property<DateTime>("_addedDate")
                 .HasColumnName("AddedDate")
                 .HasConversion<long>();
+
+            modelBuilder.Entity<DogFood>()
+                .Property(x => x.Ingredients)
+                .HasConversion(
+                    listToDb => JsonSerializer.Serialize(listToDb, null),
+                    jsonFromDb => JsonSerializer.Deserialize<List<string>>(jsonFromDb, null));
 
             base.OnModelCreating(modelBuilder);
         }
