@@ -21,6 +21,9 @@ namespace PlayingWithEFCore.PawtionData
         public decimal Price { get; set; }
         public decimal PPP { get; set; }
 
+        public Shop PetShop { get; set; }
+
+
         private DateTime _addedDate;
 
         public DateTime AddedDate() { return _addedDate; }

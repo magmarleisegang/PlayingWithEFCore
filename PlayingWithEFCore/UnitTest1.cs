@@ -2,6 +2,7 @@ using PlayingWithEFCore.PawtionData;
 using System;
 using Xunit;
 using System.Linq;
+using NetTopologySuite.Geometries;
 
 namespace PlayingWithEFCore
 {
@@ -137,6 +138,30 @@ namespace PlayingWithEFCore
                 Assert.NotEmpty(allPawtions);
                 var todaysPawtions = allPawtions.Where(x => x.AddedDate > System.DateTime.Today).ToList();
                 Assert.NotEmpty(todaysPawtions);
+            }
+        }
+
+        [Fact]
+        public void CanInsertAPawtionEntityWithShopDetails()
+        {
+            int pawtionId;
+            var myShop = new Shop("PetMax Kyalami Corner", new Point(new Coordinate(28.074818, -25.985173)));
+            using (var dbc = PawtionContext.GetSQLiteContext(sqlFilename))
+            {
+                var food = new DogFood() { BagSize = 12, Name = "Hills Active Adult" };
+                var pawtion = new Pawtion(food, 851, 32);
+                pawtion.PetShop = new Shop(myShop.Name,myShop.Location);
+                dbc.Pawtions.Add(pawtion);
+                
+                dbc.SaveChanges();
+                pawtionId = pawtion.Id;
+            }
+
+            using (var dbc = PawtionContext.GetSQLiteContext(sqlFilename))
+            {
+                var pawtion = dbc.Pawtions.Find(pawtionId);
+                Assert.Equal(myShop.Name, pawtion.PetShop.Name);
+                Assert.Equal(myShop.Location, pawtion.PetShop.Location);
             }
         }
     }

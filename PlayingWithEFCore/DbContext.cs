@@ -18,7 +18,11 @@ namespace PlayingWithEFCore
         {
 
             if (sqliteOptions != null)
-                optionsBuilder.UseSqlite(sqliteOptions.connectionString);
+            {
+                optionsBuilder.UseSqlite(sqliteOptions.connectionString,
+                 x => x.UseNetTopologySuite());
+
+            }
 
             optionsBuilder.UseLoggerFactory(LoggerFactoryHelper.MyLoggerFactory);
 
@@ -61,7 +65,10 @@ namespace PlayingWithEFCore
                 .ToTable("PawtionResults")
                 .HasNoKey();
             modelBuilder.Entity<PawtionResult>()
-                .Property(x => x.AddedDate).HasConversion<long>(); ;
+                .Property(x => x.AddedDate).HasConversion<long>();
+
+            modelBuilder.Entity<Pawtion>()
+                .OwnsOne<Shop>(p => p.PetShop);
 
             base.OnModelCreating(modelBuilder);
         }
