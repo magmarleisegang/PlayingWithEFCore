@@ -57,6 +57,12 @@ namespace PlayingWithEFCore
                 .Metadata
                 .SetValueComparer(stringLIstValueComparer);
 
+            modelBuilder.Entity<PawtionResult>()
+                .ToTable("PawtionResults")
+                .HasNoKey();
+            modelBuilder.Entity<PawtionResult>()
+                .Property(x => x.AddedDate).HasConversion<long>(); ;
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -73,6 +79,7 @@ namespace PlayingWithEFCore
 
         public DbSet<DogFood> Foods { get; set; }
         public DbSet<Pawtion> Pawtions { get; set; }
+        public DbSet<PawtionResult> PawtionResults { get; set; }
     }
 
     internal class SqliteOptions

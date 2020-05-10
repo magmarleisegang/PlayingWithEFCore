@@ -1,6 +1,7 @@
 using PlayingWithEFCore.PawtionData;
 using System;
 using Xunit;
+using System.Linq;
 
 namespace PlayingWithEFCore
 {
@@ -104,7 +105,7 @@ namespace PlayingWithEFCore
         {
             int foodId;
             var ingredientsList = new System.Collections.Generic.List<string> { "Chicken", "Bacon", "Peas", "Water", "Preservative" };
-            var ingredientsList2 = new System.Collections.Generic.List<string> { "Bacon", "Chicken", "Desicated coconut",  "Peas", "Preservative", "Water", "ZeroMSG" };
+            var ingredientsList2 = new System.Collections.Generic.List<string> { "Bacon", "Chicken", "Desicated coconut", "Peas", "Preservative", "Water", "ZeroMSG" };
             using (var dbc = PawtionContext.GetSQLiteContext(sqlFilename))
             {
                 var food = new DogFood() { BagSize = 12, Name = "Magi's pet mince 2" };
@@ -123,6 +124,19 @@ namespace PlayingWithEFCore
                 dogfood.Ingredients.Add("ZeroMSG");
                 dogfood.Ingredients.Sort();
                 dbc.SaveChanges();
+            }
+        }
+
+
+        [Fact]
+        public void CanReadFromPawtionResultsViewWithNoKey()
+        {
+            using (var dbc = PawtionContext.GetSQLiteContext(sqlFilename))
+            {
+                var allPawtions = dbc.PawtionResults;//.Where(x => x.AddedDate > System.DateTime.Today).ToList();
+                Assert.NotEmpty(allPawtions);
+                var todaysPawtions = allPawtions.Where(x => x.AddedDate > System.DateTime.Today).ToList();
+                Assert.NotEmpty(todaysPawtions);
             }
         }
     }
